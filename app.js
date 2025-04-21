@@ -1,10 +1,8 @@
-// search.js
-
-// Input maydoniga Enter bosilganda qidiruv funksiyasini chaqiradi
+// Enter bosilganda qidiruv funksiyasini chaqiradi
 document.getElementById("search-input").addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
-        event.preventDefault(); // Agar form ichida bo'lsa, form yuborilishini to'xtatadi
-        searchManga();       // Qidiruv funksiyasini ishga tushiradi
+        event.preventDefault();
+        searchManga();
     }
 });
 
@@ -12,12 +10,17 @@ document.getElementById("search-input").addEventListener("keydown", function(eve
 async function searchManga() {
     const query = document.getElementById("search-input").value.trim();
     const resultsDiv = document.getElementById("results");
+    const loader = document.getElementById("loader");
+
     resultsDiv.innerHTML = ""; // Oldingi natijalarni tozalash
 
     if (!query) {
         alert("Iltimos, manga nomini kiriting!");
         return;
     }
+
+    // Loaderni ko'rsatish
+    loader.style.display = "block";
 
     try {
         const response = await fetch(`https://api.jikan.moe/v4/manga?q=${encodeURIComponent(query)}&limit=6`);
@@ -41,8 +44,12 @@ async function searchManga() {
 
             resultsDiv.appendChild(mangaDiv);
         });
+
     } catch (error) {
         console.error("Xatolik yuz berdi:", error);
         resultsDiv.innerHTML = "<p>Xatolik yuz berdi, iltimos qayta urinib ko'ring.</p>";
+    } finally {
+        // Loaderni yashirish
+        loader.style.display = "none";
     }
 }

@@ -5,12 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qidirish</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .loader {
+            border: 10px solid #f3f3f3;
+            border-top: 10px solid #3498db;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* boshlanishda yashirin */
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Container va natija qismi uchun styling */
+        .container {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        #results {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Qidirish</h1>
         <input type="text" id="search-input" placeholder="Manga nomini kiriting...">
         <button onclick="searchManga()">Qidirish</button>
+
+        <!-- Loader ikonkasini shu yerda qo‘shdik -->
+        <div class="loader" id="loader"></div>
+
         <div id="results"></div>
     </div>
     <script src="app.js">
